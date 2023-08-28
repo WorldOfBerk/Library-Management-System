@@ -5,5 +5,6 @@
 
 int main()
 {
+    printf("aaa"); //control :))))
     return 0;
 }
