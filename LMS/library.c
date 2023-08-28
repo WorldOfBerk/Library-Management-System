@@ -52,7 +52,7 @@ void loginMenu(){
             char enteredPassword[9];
             puts("Teacher code: ");
             scanf("%s", enteredCode);
-            puts("\nPassword: ");
+            puts("Password: ");
             scanf("%s", enteredPassword);
 
             int foundTeacher_Index = -1;
@@ -78,9 +78,9 @@ void loginMenu(){
         case 2:
             char enteredNumber[7];
             char enteredPassword[9];
-            puts("\nStudent number: ");
+            puts("Student number: ");
             scanf("%s", enteredNumber);
-            puts("\nPassword: ");
+            puts("Password: ");
             scanf("%s", enteredPassword);
 
             int foundStudent_Index = -1;
@@ -92,7 +92,7 @@ void loginMenu(){
             }
 
             if (foundStudent_Index != -1) {
-                printf("Studen Login successful!\n");
+                printf("Student Login successful!\n");
                 studentMenu(foundStudent_Index);
             } else {
                 printf("Invalid student number or password!\n");
@@ -112,6 +112,24 @@ void registerMenu(){
     printf("Enter your choice: ");
     
     scanf("%d", &register_Index);
+
+    switch (register_Index)
+    {
+    case 1:
+        if (teacherCount < MAX_TEACHERS)
+        {
+            Teacher newTeacher;
+            puts("Teacher code: ");
+            scanf("%s", newTeacher.code);
+            puts("Name and Surname: ");
+            scanf("%*c%[^\n]", newTeacher.name);
+        }
+        
+        break;
+    
+    default:
+        break;
+    }
 }
 
 void teacherMenu(int teacher_Index){
