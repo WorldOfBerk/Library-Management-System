@@ -209,7 +209,7 @@ void teacherMenu(int teacher_Index){
                     found_Index = i;
                     break;
                 }
-
+            }
                 if (found_Index != -1)
                 {
                     for (int i = 0; i < bookCount - 1; i++)
@@ -222,7 +222,6 @@ void teacherMenu(int teacher_Index){
                 }else{
                     puts("There is no matched book!");
                 }
-            }
             
             break;
         case 3:
@@ -244,5 +243,56 @@ void teacherMenu(int teacher_Index){
 }
 
 void studentMenu(int student_Index){
+    int studentChoice;
 
+    while (1)
+    {
+        puts("\nStudent Menu\n");
+        puts("1. List books and borrow!\n");
+        puts("2. Quit!\n");
+        puts("Enter your choice: ");
+        scanf("%d", &studentChoice);
+
+        switch (studentChoice)
+        {
+        case 1:
+            puts("\nBooks\n");
+            for (int i = 0; i < bookCount; i++)
+            {
+                printf("Serial Number: %s, Title: %s, Stock: %d", books[i].serialNumber, books[i].title, books[i].stock);
+            }
+            char choosenSerialNumber[13];
+            puts("\nEnter the 12 digit of serial number you'd like to borrow: ");
+            scanf("%s", choosenSerialNumber);
+
+            int found_Index = -1;
+            for (int i = 0; i < bookCount; i++)
+            {
+                if (strcmp(choosenSerialNumber, books[i].serialNumber) == 0)
+                {
+                    found_Index = i;
+                    break;
+                }
+            }
+            if (found_Index != -1 && books[found_Index].stock > 0)
+            {
+                books[found_Index].stock--;
+                printf("Book has succesfully borrowed! New Stock: %d", books[found_Index].stock);
+                saveDataToFiles();
+            }else if (found_Index != -1 && books[found_Index].stock == 0)
+            {
+                puts("There is no stock left");
+            }else {
+                puts("Invalid Serial Number!");
+            }
+            break;
+        case 2:
+            return;
+
+        default:
+            puts("Invalid choice!");
+        }
+    }
+    
+    
 }
