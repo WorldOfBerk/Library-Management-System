@@ -292,7 +292,49 @@ void studentMenu(int student_Index){
         default:
             puts("Invalid choice!");
         }
+    }   
+}
+
+void saveDataToFiles(){
+    //For teachers
+    FILE *teacherFile = fopen("Teacher.txt", "w");
+    if (teacherFile == NULL)
+    {
+        puts("File couldn't open!\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < teacherCount; i++)
+    {
+        fprintf(teacherFile, "%s %s %s\n", teachers[i].code, teachers[i].name, teachers[i].password);
+    }
+    fclose(teacherFile);
+
+    //For Students
+    FILE *studentFile = fopen("Student.txt", "w");
+    if (studentFile == NULL)
+    {
+        puts("File couldn't open!\n");
+        exit(1);
     }
     
+    for (int i = 0; i < studentCount; i++)
+    {
+        fprintf(studentFile, "%s %s %s\n", students[i].number, students[i].name, students[i].password);
+    }
+    fclose(studentFile);
     
+    //For Books
+    FILE *bookFile = fopen("books.txt", "w");
+    if (bookFile == NULL)
+    {
+        puts("File couldn't open!\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < bookCount; i++)
+    {
+        fprintf(bookFile, "%s %s %d\n", books[i].serialNumber, books[i].title, books[i].stock);
+    }
+    fclose(bookFile);
 }
