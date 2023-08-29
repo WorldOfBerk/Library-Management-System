@@ -338,3 +338,47 @@ void saveDataToFiles(){
     }
     fclose(bookFile);
 }
+
+void loadDataFromFiles(){
+    //Load Teachers
+    FILE *teacherFile = fopen("Teacher.txt", "r");
+    if (teacherFile == NULL)
+    {
+        return;
+    }
+
+    while (fscanf(teacherFile, "%s %s %s", teachers[teacherCount].code, teachers[teacherCount].name, teachers[teacherCount].password) != EOF)
+    {
+        teacherCount++;
+    }
+    
+    fclose(teacherFile);
+
+    //Load Students
+    FILE *studentFile = fopen("Student.txt", "r");
+    if (studentFile == NULL)
+    {
+        return;
+    }
+
+    while (fscanf(studentFile, "%s %s %s", students[studentCount].number, students[studentCount].name, students[studentCount].password) != EOF)
+    {
+        studentCount++;
+    }
+    
+    fclose(studentFile);
+
+    //Load Books
+    FILE *bookFile = fopen("books.txt", "r");
+    if (bookFile == NULL)
+    {
+        return;
+    }
+
+    while (fscanf(bookFile, "%s %s %d", books[bookCount].serialNumber, books[bookCount].title, books[bookCount].stock))
+    {
+        bookCount++;
+    }
+    
+    fclose(bookCount);
+}
