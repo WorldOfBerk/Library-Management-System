@@ -162,7 +162,85 @@ void registerMenu(){
 }
 
 void teacherMenu(int teacher_Index){
+    int teacherChoice;
+    while (1)
+    {
+        puts("\nTeacher Menu\n");
+        puts("1. Add Book\n");
+        puts("2. Remove Book\n");
+        puts("3. List All\n");
+        puts("Quit\n");
+        puts("Enter your choice: ");
+        scanf("%d", &teacherChoice);
 
+        switch (teacherChoice)
+        {
+        case 1:
+            if (bookCount < MAX_BOOKS)
+            {
+                Book newbook;
+                puts("Enter 12 digit serial number: ");
+                scanf("%s", newbook.serialNumber);
+                puts("Enter Book name");
+                scanf("%*c%[^\n]", newbook.title);
+                puts("Enter stock count: ");
+                scanf("%d", &newbook.stock);
+
+                books[bookCount++] = newbook;
+                puts("The book added succesfully");
+                saveDataToFiles();
+            }
+            else{
+                puts("Reached maximum book count!");
+            }
+            
+            break;
+
+        case 2:
+            char removeSerialNumber[13];
+            puts("Enter the 12 digit serial number deletion: ");
+            scanf("%s", removeSerialNumber);
+
+            int found_Index = -1;
+            for (int i = 0; i < bookCount; i++)
+            {
+                if (strcmp(removeSerialNumber, books[i].serialNumber) == 0)
+                {
+                    found_Index = i;
+                    break;
+                }
+
+                if (found_Index != -1)
+                {
+                    for (int i = 0; i < bookCount - 1; i++)
+                    {
+                        books[i] = books[i + 1];
+                    }
+                    bookCount--;
+                    puts("Book removed succesfully");
+                    saveDataToFiles();
+                }else{
+                    puts("There is no matched book!");
+                }
+            }
+            
+            break;
+        case 3:
+            puts("\nAll Books\n");
+            for (int i = 0; i < bookCount; i++)
+            {
+                printf("Serial Number: %s, Title: %s, Stock: %d", books[i].serialNumber, books[i].title, books[i].stock);
+            }
+            break;
+
+        case 4:
+            return;
+
+        default:
+            puts("Invalid choice");
+        }
+    }
+    
 }
 
 void studentMenu(int student_Index){
