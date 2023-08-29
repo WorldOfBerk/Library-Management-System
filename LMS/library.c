@@ -123,12 +123,41 @@ void registerMenu(){
             scanf("%s", newTeacher.code);
             puts("Name and Surname: ");
             scanf("%*c%[^\n]", newTeacher.name);
+            puts("Enter a password: ");
+            scanf("%s", newTeacher.password);
+
+            teachers[teacherCount++] = newTeacher;
+            puts("Teacher succesfully saved!");
+            savedataToFiles();
+        }
+        else{
+            puts("Reached to Maximum Teacher count!");
         }
         
         break;
+
+    case 2:
+        if(studentCount < MAX_STUDENTS){
+            Student newStudent;
+            puts("Student number: ");
+            scanf("%s", newStudent.number);
+            puts("Student name: ");
+            scanf("%*c%[^\n]", newStudent.name);
+            puts("Enter a password: ");
+            scanf("%s", newStudent.password);
+
+            students[studentCount++] = newStudent;
+            puts("Student succesfully saved!");
+            saveDataToFiles();
+        }
+        else{
+            puts("Reached to Maximum Student count!");
+        }
+
+        break;
     
     default:
-        break;
+        puts("Invalid choice!");
     }
 }
 

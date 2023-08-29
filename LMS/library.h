@@ -1,6 +1,10 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
 
+#define MAX_TEACHERS 100
+#define MAX_STUDENTS 100
+#define MAX_BOOKS 100
+
 typedef struct {
     char code[7];
     char name[50];
