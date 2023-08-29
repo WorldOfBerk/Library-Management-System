@@ -5,6 +5,6 @@
 
 int main()
 {
-    printf("aaa"); //control :))))
+    init_Library();
     return 0;
 }

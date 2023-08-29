@@ -3,41 +3,56 @@
 #include <string.h>
 #include "library.h"
 
-typedef struct{
-    char code[7];
-    char name[50];
-    char password[9];
-} Teacher;
-
-typedef struct{
-    char number[7];
-    char name[50];
-    char password[9];
-} Student;
-
-typedef struct
-{
-    char serialNumber[13];
-    char title[50];
-    int stock;
-} Book;
-
 Teacher* teachers = NULL;
 Student* students = NULL;
 Book* books = NULL;
+
 
 int teacherCount = 0;
 int studentCount = 0;
 int bookCount = 0;
 
-void init_Library(){
 
+void init_Library(){
+    
+    loadDataFromFiles();
+    
+    while (1)
+    {
+        puts("\nWelcome to Library Management System\n");
+        puts("1. Login\n");
+        puts("2. Register\n");
+        puts("3. QUIT\n");
+        puts("Enter your choice");
+
+        int choice;
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+            loginMenu();
+            break;
+        
+        case 2:
+            registerMenu();
+            break;
+        
+        case 3:
+            saveDataToFiles();
+            exit(0);
+
+        default:
+            puts("Invalid!");
+        }
+    }
 }
 
 void loginMenu(){
     
     int login_Index;
-    
+    char enteredNumber[7];
+    char enteredCode[7];
     printf("1. Teacher Login\n");
     printf("2. Student Login\n");
     printf("QUIT!\n");
@@ -48,17 +63,17 @@ void loginMenu(){
     switch (login_Index)
     {
         case 1:
-            char enteredCode[7];
-            char enteredPassword[9];
+            
             puts("Teacher code: ");
             scanf("%s", enteredCode);
+            char teacher_enteredPassword[9];
             puts("Password: ");
-            scanf("%s", enteredPassword);
+            scanf("%s", teacher_enteredPassword);
 
             int foundTeacher_Index = -1;
             for (int i = 0; i < teacherCount; i++)
             {
-                if (strcmp(enteredCode, teachers[i].code) == 0 && strcmp(enteredPassword, teachers[i].password) == 0)
+                if (strcmp(enteredCode, teachers[i].code) == 0 && strcmp(teacher_enteredPassword, teachers[i].password) == 0)
                 {
                     foundTeacher_Index = i;
                     break;
@@ -76,16 +91,16 @@ void loginMenu(){
             break;
 
         case 2:
-            char enteredNumber[7];
-            char enteredPassword[9];
+            
             puts("Student number: ");
             scanf("%s", enteredNumber);
+            char student_enteredPassword[9];
             puts("Password: ");
-            scanf("%s", enteredPassword);
+            scanf("%s", student_enteredPassword);
 
             int foundStudent_Index = -1;
             for (int i = 0; i < studentCount; i++) {
-                if (strcmp(enteredNumber, students[i].number) == 0 && strcmp(enteredPassword, students[i].password) == 0) {
+                if (strcmp(enteredNumber, students[i].number) == 0 && strcmp(student_enteredPassword, students[i].password) == 0) {
                     foundStudent_Index = i;
                     break;
                 }
@@ -128,7 +143,7 @@ void registerMenu(){
 
             teachers[teacherCount++] = newTeacher;
             puts("Teacher succesfully saved!");
-            savedataToFiles();
+            saveDataToFiles();
         }
         else{
             puts("Reached to Maximum Teacher count!");
@@ -162,7 +177,10 @@ void registerMenu(){
 }
 
 void teacherMenu(int teacher_Index){
-    int teacherChoice;
+    
+    int teacherChoice; 
+    char removeSerialNumber[13];
+    
     while (1)
     {
         puts("\nTeacher Menu\n");
@@ -197,7 +215,7 @@ void teacherMenu(int teacher_Index){
             break;
 
         case 2:
-            char removeSerialNumber[13];
+           
             puts("Enter the 12 digit serial number deletion: ");
             scanf("%s", removeSerialNumber);
 
@@ -347,11 +365,11 @@ void loadDataFromFiles(){
         return;
     }
 
-    while (fscanf(teacherFile, "%s %s %s", teachers[teacherCount].code, teachers[teacherCount].name, teachers[teacherCount].password) != EOF)
+    while (fscanf(teacherFile, "%s %s %s", teachers[teacherCount].code, teachers[teacherCount].name, teachers[teacherCount].password) == 3)
     {
         teacherCount++;
     }
-    
+
     fclose(teacherFile);
 
     //Load Students
@@ -375,10 +393,11 @@ void loadDataFromFiles(){
         return;
     }
 
-    while (fscanf(bookFile, "%s %s %d", books[bookCount].serialNumber, books[bookCount].title, books[bookCount].stock))
+    while (fscanf(bookFile, "%s %s %d", books[bookCount].serialNumber, books[bookCount].title, &books[bookCount].stock) == 3)
     {
         bookCount++;
     }
+
     
-    fclose(bookCount);
+    fclose(bookFile);
 }

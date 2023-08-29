@@ -23,9 +23,9 @@ typedef struct {
     int stock;
 } Book;
 
-extern Teacher *teachers;
-extern Student *students;
-extern Book *books;
+extern Teacher* teachers;
+extern Student* students;
+extern Book* books;
 
 extern int teacherCount;
 extern int studentCount;
