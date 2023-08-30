@@ -128,45 +128,59 @@ void registerMenu(){
     
     scanf("%d", &register_Index);
 
+    while (getchar() != '\n');
+
     switch (register_Index)
     {
     case 1:
         if (teacherCount < MAX_TEACHERS)
         {
             Teacher newTeacher;
-            puts("Teacher code: ");
+            printf("Teacher code: ");
             scanf("%s", newTeacher.code);
-            puts("Name and Surname: ");
+            printf("Name and Surname: ");
             scanf("%*c%[^\n]", newTeacher.name);
-            puts("Enter a password: ");
-            scanf("%s", newTeacher.password);
+
+            while (getchar() != '\n');
+
+            printf("Enter a password: ");
+            scanf("%8s", newTeacher.password);
+
+            while (getchar() != '\n');
 
             teachers[teacherCount++] = newTeacher;
-            puts("Teacher succesfully saved!");
+            printf("Teacher successfully saved!\n");
             saveDataToFiles();
         }
-        else{
-            puts("Reached to Maximum Teacher count!");
+        else {
+            printf("Reached the maximum teacher count!\n");
         }
-        
+
         break;
 
     case 2:
-        if(studentCount < MAX_STUDENTS){
+        if (studentCount < MAX_STUDENTS) {
             Student newStudent;
-            puts("Student number: ");
+            printf("Student number: ");
             scanf("%s", newStudent.number);
-            puts("Student name: ");
+            printf("Student name: ");
             scanf("%*c%[^\n]", newStudent.name);
-            puts("Enter a password: ");
-            scanf("%s", newStudent.password);
+
+            // Boşlukları temizle
+            while (getchar() != '\n');
+
+            printf("Enter a password: ");
+            scanf("%8s", newStudent.password);
+
+            // Boşlukları temizle
+            while (getchar() != '\n');
 
             students[studentCount++] = newStudent;
-            puts("Student succesfully saved!");
+            printf("Student successfully saved!\n");
             saveDataToFiles();
         }
-        else{
-            puts("Reached to Maximum Student count!");
+        else {
+            printf("Reached the maximum student count!\n");
         }
 
         break;
@@ -318,7 +332,7 @@ void saveDataToFiles(){
     FILE *teacherFile = fopen("Teacher.txt", "w");
     if (teacherFile == NULL)
     {
-        puts("File couldn't open!\n");
+        puts("Teacher file couldn't be opened for writing!\n");
         exit(1);
     }
 
@@ -332,7 +346,7 @@ void saveDataToFiles(){
     FILE *studentFile = fopen("Student.txt", "w");
     if (studentFile == NULL)
     {
-        puts("File couldn't open!\n");
+        puts("Student file couldn't be opened for writing!\n");
         exit(1);
     }
     
@@ -346,7 +360,7 @@ void saveDataToFiles(){
     FILE *bookFile = fopen("books.txt", "w");
     if (bookFile == NULL)
     {
-        puts("File couldn't open!\n");
+        puts("Books file couldn't be opened for writing!\n");
         exit(1);
     }
 
@@ -365,11 +379,11 @@ void loadDataFromFiles(){
         return;
     }
 
-    while (fscanf(teacherFile, "%s %s %s", teachers[teacherCount].code, teachers[teacherCount].name, teachers[teacherCount].password) == 3)
+    while (fscanf(teacherFile, "%s %s %s", teachers[teacherCount].code, teachers[teacherCount].name, teachers[teacherCount].password) != EOF)
     {
         teacherCount++;
     }
-
+    
     fclose(teacherFile);
 
     //Load Students
@@ -393,11 +407,10 @@ void loadDataFromFiles(){
         return;
     }
 
-    while (fscanf(bookFile, "%s %s %d", books[bookCount].serialNumber, books[bookCount].title, &books[bookCount].stock) == 3)
+    while (fscanf(bookFile, "%s %s %d", books[bookCount].serialNumber, books[bookCount].title, &books[bookCount].stock) != EOF)
     {
         bookCount++;
     }
-
     
     fclose(bookFile);
 }
