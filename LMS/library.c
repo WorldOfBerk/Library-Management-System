@@ -64,10 +64,10 @@ void loginMenu(){
     {
         case 1:
             
-            puts("Teacher code: ");
+            puts("Enter your 6 digit teacher code: ");
             scanf("%s", enteredCode);
             char teacher_enteredPassword[9];
-            puts("Password: ");
+            puts("Enter 8 digit password: ");
             scanf("%s", teacher_enteredPassword);
 
             int foundTeacher_Index = -1;
@@ -92,10 +92,10 @@ void loginMenu(){
 
         case 2:
             
-            puts("Student number: ");
+            puts("Enter 8 digit student number: ");
             scanf("%s", enteredNumber);
             char student_enteredPassword[9];
-            puts("Password: ");
+            puts("Enter 8 digit password: ");
             scanf("%s", student_enteredPassword);
 
             int foundStudent_Index = -1;
@@ -136,14 +136,14 @@ void registerMenu(){
         if (teacherCount < MAX_TEACHERS)
         {
             Teacher newTeacher;
-            printf("Teacher code: ");
+            printf("Enter 6 digit teacher code: ");
             scanf("%s", newTeacher.code);
             printf("Name and Surname: ");
             scanf("%*c%[^\n]", newTeacher.name);
 
             while (getchar() != '\n');
 
-            printf("Enter a password: ");
+            printf("Enter a 8 digit password: ");
             scanf("%8s", newTeacher.password);
 
             while (getchar() != '\n');
@@ -161,7 +161,7 @@ void registerMenu(){
     case 2:
         if (studentCount < MAX_STUDENTS) {
             Student newStudent;
-            printf("Student number: ");
+            printf("Enter 6 digit student number: ");
             scanf("%s", newStudent.number);
             printf("Student name: ");
             scanf("%*c%[^\n]", newStudent.name);
@@ -169,7 +169,7 @@ void registerMenu(){
             // Boşlukları temizle
             while (getchar() != '\n');
 
-            printf("Enter a password: ");
+            printf("Enter a 8 digit password: ");
             scanf("%8s", newStudent.password);
 
             // Boşlukları temizle
